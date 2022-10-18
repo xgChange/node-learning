@@ -48,12 +48,22 @@ path.isAbsolute() // 是否是绝对路径
 - 权限：rwx - 4 2 1 (win中默认是 0o666，可读可写不可执行)
 - 用户：文件所有者-所有组-其他用户
 - 常见flag操作符: r、w、s(同步)、+(执行相反操作)、x(排他操作)、a(追加)
-- fd 就是操作系统分配给被打开文件的标识(文件描述符)
+- fd 就是操作系统分配给被打开文件的标识(文件描述符) 从3开始，(0,1,2都被占了)
 
 ### 文件读写和拷贝操作
 
-- readFile
+- readFile(一次性把文件读出来)
 - writeFile
 - appendFile
 - copyFile
 - watchFile
+
+
+### 目录操作api
+
+- access: 判断文件或目录是否具有操作权限
+- stat: 获取目录及文件信息
+- mkdir: 创建目录
+- rmdir: 删除目录
+- readdir: 读取目录中内容
+- unlink: 删除指定文件

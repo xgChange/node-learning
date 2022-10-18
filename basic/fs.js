@@ -51,4 +51,29 @@ function copyFile(sourceFile, targetFile) {
   })
 }
 
-copyFile('data.txt', 'data-copy.txt')
+// copyFile('data.txt', 'data-copy.txt')
+
+fs.open('data.txt', 'r', (e, rd) => {
+  console.log(rd)
+})
+
+/**
+ * rfd是表示文件标识符
+ * buf 是 buffer -> Buffer.alloc(10)
+ * 第三个参数是从buffer的第几位开始
+ * 第四个参数是读的长度
+ * 第五个参数是从文件第几个字节对应的位置开始读取
+ * fs.read(rfd, buf, 0, 3, 0, (err, readBytes, data) => {
+ *  // 
+ * })
+ */
+
+/**
+ * write 将缓冲区里的内容写入磁盘中
+ * wfd 文件标识符
+ * buf buffer
+ * 第三个参数：从buffer的第几个位置
+ * 第四个参数：长度
+ * 第五个参数：从文件的哪个位开始写(一般写0，从头开始写)
+ */
+
