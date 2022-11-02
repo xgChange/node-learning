@@ -1,0 +1,2 @@
+const p = 3
+console.log('inner p', p)
