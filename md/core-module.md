@@ -132,4 +132,20 @@ js 文件的编译执行
 调用时传入exports、module、require等属性值 (包装一个函数，里面的内容是文件内容)
 ```
 
-### VM模块的使用 (沙箱)
+### VM 模块的使用 (沙箱)
+
+## 事件模块
+
+> node.js 是基于事件驱动的异步操作架构，内置 events 模块
+
+- events 模块提供了 EventEmitter 类
+- node 中很多内置模块继承了 EventEmitter
+
+### EventEmitter 常见 API
+
+- on
+- emit 触发事件，按照注册的顺序同步调用每个事件监听
+- once
+- off
+
+## 事件循环
