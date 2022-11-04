@@ -11,7 +11,7 @@
       "skipFiles": [
         // "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}\\demo\\EventLoop\\eventloop.js"
+      "program": "${workspaceFolder}\\demo\\stream\\file-write-stream.js"
     }
   ]
 }
