@@ -2,6 +2,8 @@
 
 const { program } = require('commander')
 
+const Server = require('../main')
+
 const options = {
   '-p --port <p...>': {
     description: 'init server port',
@@ -42,4 +44,13 @@ program.name('mycliserver')
 program.parse(process.argv)
 
 const cmdOptions = program.opts()
-console.log(cmdOptions)
+
+const formatOptions = (options) => {
+  return Object.keys(options).reduce((cur, next) => {
+    cur[next] = options[next][0]
+    return cur
+  }, {})
+}
+
+const server = new Server(formatOptions(cmdOptions))
+server.start()
