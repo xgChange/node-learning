@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
 import { OtherService } from './otherService';
 import { UserService } from './service';
 
@@ -9,7 +9,7 @@ export class CatsController {
 
   @Get('name')
   getName() {
-    console.log(this.other.getOther());
-    return this.userService.getName();
+    throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+    // return this.userService.getName();
   }
 }
