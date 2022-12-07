@@ -4,6 +4,9 @@ import { AppModule } from './app/app.module';
 import { ReportLogger } from './log/ReportLogger';
 import { LoggerMiddleware } from './middleware/logger';
 import { join } from 'path';
+import { HttpExceptionFilter } from './error/http-exception.filter';
+import { AnyExceptionsFilter } from './error/any-exception.filter';
+import { ValidationPipe } from '@nestjs/common';
 
 const staticAssetsFloder = join(__dirname, '..', 'upload_static');
 
@@ -26,6 +29,17 @@ async function bootstrap() {
   });
 
   app.setGlobalPrefix('api');
+
+  // 全局过滤器，处理异常
+  app.useGlobalFilters(new HttpExceptionFilter(), new AnyExceptionsFilter());
+
+  // 全局管道
+  app.useGlobalPipes(
+    // 里面自带了 class-validator
+    new ValidationPipe({
+      whitelist: true,
+    }),
+  );
   await app.listen(3000);
 }
 bootstrap();
