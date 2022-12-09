@@ -8,7 +8,7 @@ import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
 export class ValidationPipe implements PipeTransform {
   transform(value: any, metadata: ArgumentMetadata) {
     const { metatype } = metadata;
-    console.log(Object.toString.call(metatype), metatype);
+    // console.log(Object.toString.call(metatype), metatype);
     return (metatype as any)(value);
   }
 }

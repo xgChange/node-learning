@@ -38,3 +38,23 @@ export class CatsController {
   }
 }
 ```
+
+## 设置全局拦截器或者日志，使用 useGlobalInterceptors 不能注入依赖的意思？
+
+```typescript
+// 如果 LogInterceptor 里面有依赖项，这种方式不能注入该依赖
+app.useGlobalInterceptors(new LogInterceptor());
+
+// 使用这种方式可以，但是要 provide 这个依赖
+// 因为 loggerModule里面导出了 ReportLogger，provide LoginInterceptor正好可以用到
+@Module({
+  imports: [LoggerModule],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LogInterceptor,
+    },
+  ],
+})
+export class AppModule {}
+```

@@ -22,6 +22,7 @@ export class CatsController {
     // throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
     // throw new Error('错误');
     // console.log(this.userService.getName);
+    console.log(id);
     return this.userService.getName();
   }
 }

@@ -40,6 +40,8 @@ async function bootstrap() {
       whitelist: true,
     }),
   );
+
+  // 全局拦截器放到 AppModule里面了
   await app.listen(3000);
 }
 bootstrap();
