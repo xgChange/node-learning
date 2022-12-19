@@ -19,6 +19,7 @@ import { UserService } from './service';
 @Module({
   controllers: [CatsController],
   providers: [UserService, OtherService], // 然后我们将这两个作为一个 providers，然后在初始化实例的时候会进行注入，准确的找到相应的依赖
+  exports: [UserService],
 })
 export class UserModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
