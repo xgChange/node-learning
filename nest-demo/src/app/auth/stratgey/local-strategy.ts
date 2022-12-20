@@ -5,8 +5,14 @@
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
 import { AuthService } from '../auth.service';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { ReportLogger } from 'src/log/ReportLogger';
+import { PASSWORD_ERROR, USER_NOT_FOUND_ERROR } from '../constants';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -22,8 +28,13 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   async validate(username: string, password: string) {
     const user = await this.authService.validateUser(username, password);
     if (!user) {
-      this.reportLogger.error('未授权');
-      throw new UnauthorizedException();
+      this.reportLogger.error(USER_NOT_FOUND_ERROR);
+      throw new UnauthorizedException(USER_NOT_FOUND_ERROR);
+    }
+
+    if (!Object.keys(user).length) {
+      this.reportLogger.error(PASSWORD_ERROR);
+      throw new HttpException(PASSWORD_ERROR, HttpStatus.OK);
     }
     return user;
   }

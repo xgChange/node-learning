@@ -44,7 +44,7 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   // 全局过滤器，处理异常
-  app.useGlobalFilters(new HttpExceptionFilter(), new AnyExceptionsFilter());
+  app.useGlobalFilters(new AnyExceptionsFilter(), new HttpExceptionFilter());
 
   // 全局管道
   app.useGlobalPipes(
