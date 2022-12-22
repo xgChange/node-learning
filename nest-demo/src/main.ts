@@ -50,7 +50,7 @@ async function bootstrap() {
   app.useGlobalPipes(
     // 里面自带了 class-validator
     new ValidationPipe({
-      whitelist: true,
+      // whitelist: true,
     }),
   );
 
