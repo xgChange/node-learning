@@ -9,9 +9,35 @@ import { AppService } from './app.service';
 import { CatsModule } from './cats';
 import { UserModule } from './user';
 import { AuthModule } from './auth/auth.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { loadConfig } from 'src/config/dbconfig';
 
-const configModule = [ConfigModule.forRoot()];
+const isProd = process.env.NODE_ENV === 'production';
 
+const configModule = [
+  ConfigModule.forRoot({
+    load: [loadConfig],
+    envFilePath: [isProd ? '.prod.env' : '.env'],
+  }),
+  TypeOrmModule.forRootAsync({
+    imports: [ConfigModule],
+    inject: [ConfigService],
+    useFactory: (configService: ConfigService) => {
+      const { host, port, username, password, database, entities } =
+        configService.get('db');
+      return {
+        type: 'mysql',
+        host,
+        port: port,
+        username,
+        password,
+        database,
+        entities: [entities],
+        synchronize: true,
+      };
+    },
+  }),
+];
 const businessModules = [CatsModule, UserModule, LoggerModule, AuthModule];
 
 @Module({
@@ -31,6 +57,6 @@ const businessModules = [CatsModule, UserModule, LoggerModule, AuthModule];
 })
 export class AppModule {
   constructor(private configService: ConfigService) {
-    // console.log('sss', this.configService.get('db_pwd'));
+    // console.log('sss', this.configService.get('TYPEORM_HOST'));
   }
 }

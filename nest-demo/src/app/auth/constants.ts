@@ -2,7 +2,7 @@ import { SetMetadata } from '@nestjs/common';
 
 export const jwtConstants = {
   secret: 'secretKey',
-  expireIn: 3, // 分钟
+  expireIn: 60, // 分钟
 };
 
 export const USER_NOT_FOUND_ERROR = 'user not found';
