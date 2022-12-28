@@ -13,6 +13,7 @@ const staticAssetsFloder = join(__dirname, '..', 'upload_static');
 
 function setupSwagger(app: NestExpressApplication) {
   const config = new DocumentBuilder()
+    .addBearerAuth()
     .setTitle('My Demo')
     .setDescription('demo description')
     .setVersion('1.0')
@@ -51,6 +52,7 @@ async function bootstrap() {
     // 里面自带了 class-validator
     new ValidationPipe({
       // whitelist: true,
+      transform: true,
     }),
   );
 
