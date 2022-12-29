@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { Exclude } from 'class-transformer';
+import { doCrypto } from 'src/utils/bcrypt';
 
 @Entity()
 export class User {
@@ -27,6 +28,12 @@ export class User {
    */
   @Column()
   age: number;
+
+  // 在保存实体之前调用它
+  @BeforeInsert()
+  async hashPassword() {
+    this.password = await doCrypto(this.password);
+  }
 }
 
 export default 'ssa';

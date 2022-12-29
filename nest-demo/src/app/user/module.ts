@@ -5,11 +5,10 @@ import {
   RequestMethod,
 } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserRepository } from 'src/db/repositories/UserRepository';
+import { LoggerModule } from 'src/log/log.module';
 import { LoggerMiddleware } from 'src/middleware/logger';
 import { CatsController } from './controller';
 import { User } from './entities/user.entity';
-import { OtherService } from './otherService';
 import { UserService } from './service';
 
 /**
@@ -20,9 +19,9 @@ import { UserService } from './service';
     metatype 就是provides收集的数组，会注入到 controller 中去，也就是初始化controller实例
  */
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [TypeOrmModule.forFeature([User]), LoggerModule],
   controllers: [CatsController],
-  providers: [UserService, OtherService], // 然后我们将这两个作为一个 providers，然后在初始化实例的时候会进行注入，准确的找到相应的依赖
+  providers: [UserService], // 然后我们将这两个作为一个 providers，然后在初始化实例的时候会进行注入，准确的找到相应的依赖
   exports: [UserService],
 })
 export class UserModule implements NestModule {
