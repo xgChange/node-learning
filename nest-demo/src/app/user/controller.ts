@@ -8,6 +8,7 @@ import {
   Post,
   Query,
   Request,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { ValidationPipe } from 'src/pipe/custom-pipe';
@@ -18,6 +19,9 @@ import { User } from './entities/user.entity';
 import { SkipJwtAuth } from '../auth/constants';
 import { ReportLogger } from 'src/log/ReportLogger';
 import { USER_ALREADY_EXIT } from './constant';
+import { ReadArticlePolicyHandler } from '../casl/handler/ReadArticlePolicyHandler';
+import { PoliciesGuard } from '../casl/guards/casl.guard';
+import { Action, CheckPolicies } from '../casl/constant';
 
 @ApiTags('用户相关')
 @Controller('/user')
@@ -29,6 +33,10 @@ export class CatsController {
 
   // params 是指 /url/:id 这个id是params，例如 /url/ddd，id就是ddd
   @Get('name')
+  @UseGuards(PoliciesGuard)
+  @CheckPolicies((ability) => {
+    return ability.can(Action.Read, User);
+  })
   getName(@Query('id', ValidationPipe) id: string, @Request() req) {
     // throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
     // throw new Error('错误');
